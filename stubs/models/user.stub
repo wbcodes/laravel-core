@@ -1,0 +1,67 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Wbcodes\SiteCore\Traits\SiteUserTrait;
+use Wbcodes\SiteCore\Traits\HasCoreFactory;
+
+class {{ class }} extends Authenticatable
+{
+    use SiteUserTrait, HasCoreFactory , Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'email', 'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+  /**
+   * boot
+   */
+  public static function boot()
+  {
+      parent::boot();
+
+      static::deleting(function ($model) {
+          // set deleted by
+          $model->deleted_by = auth()->id();
+          $model->timestamps = false;
+          $model->save();
+          // delete related items
+
+      });
+
+      static::restoring(function ($model) {
+      });
+
+      static::forceDeleted(function ($model) {
+          if ($model->avatar) {
+              unlinkOldFile($model->avatar, $model->folderName);
+          }
+      });
+  }
+}
+

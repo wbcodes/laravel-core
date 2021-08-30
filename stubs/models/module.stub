@@ -1,0 +1,92 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Wbcodes\SiteCore\Models\Permission;
+use Wbcodes\SiteCore\Traits\Helper;
+
+class {{ class }} extends Model
+{
+    use Helper;
+
+    protected $fillable = [
+        'table_name', 'name', 'title', 'icon_class', 'controller', 'model',
+    ];
+
+    const BLOCK_FIELD_PERMISSION = [
+        'Property',
+        'Project',
+        'ProjectType',
+        'ProjectFlavor',
+        'User',
+        'ListOption',
+        'Filter',
+        'Country',
+        'City',
+        'Town',
+        'District',
+        'Role',
+        'Report',
+        'ReportFolder',
+    ];
+
+    const READ_ONLY_MODULE = [
+        'Property',
+        'Project',
+        'User',
+        'Report',
+        'ListOption',
+        'Filter',
+        'Country'
+    ];
+
+    /**
+     * @return HasMany
+     */
+    public function permissions()
+    {
+        return $this->hasMany(Permission::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function field_permissions()
+    {
+        return $this->hasMany(Permission::class)->where('permission_type', 'field');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function profile_permissions()
+    {
+        return $this->hasMany(Permission::class)->where('permission_type', 'profile');
+    }
+
+    public function scopeAvailableFieldPermission($query)
+    {
+        return $query->whereNotIn('name', self::BLOCK_FIELD_PERMISSION);
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeField($query)
+    {
+        return $query->where('permission_type', '=', 'field');
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeProfile($query)
+    {
+        return $query->where('permission_type', '=', 'profile');
+    }
+}
+

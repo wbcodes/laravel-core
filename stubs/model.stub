@@ -1,0 +1,30 @@
+<?php
+
+namespace {{ namespace }};
+
+class {{ class }} extends \Wbcodes\SiteCore\Models\{{ class }}
+{
+    /**
+     * boot
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($model) {
+        });
+
+        static::updated(function ($model) {
+        });
+
+        static::deleted(function ($model) {
+
+        });
+
+        static::forceDeleted(function ($model) {
+        });
+
+        static::saved(function ($model) {
+        });
+    }
+}

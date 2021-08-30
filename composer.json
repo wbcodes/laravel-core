@@ -1,0 +1,68 @@
+{
+  "name": "wbcodes/site",
+  "description": "This websites core site package",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Zahir Hayrullah",
+      "email": "zahir.hayrullah@gmail.com"
+    }
+  ],
+  "require": {
+    "barryvdh/laravel-dompdf": "^0.8.7",
+    "doctrine/dbal": "^3.0",
+    "intervention/imagecache": "^2.5",
+    "jenssegers/agent": "^2.6",
+    "jeroennoten/laravel-adminlte": "^3.5",
+    "laravel/scout": "^8.3",
+    "laravel/ui": "^3.0",
+    "maatwebsite/excel": "^3.1",
+    "mcamara/laravel-localization": "^1.6",
+    "owen-it/laravel-auditing": "^10.0",
+    "predis/predis": "^1.1",
+    "spatie/laravel-permission": "^3.13",
+    "spatie/laravel-translatable": "^4.4",
+    "spatie/laravel-searchable": "^1.7",
+    "yajra/laravel-datatables-oracle": "~9.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Wbcodes\\SiteCore\\": "src/",
+      "Wbcodes\\SiteCore\\Database\\Factories\\": "src/database/Factories/",
+      "Wbcodes\\SiteCore\\Database\\Seeders\\": "src/database/Seeders/",
+      "Wbcodes\\SiteCore\\Http\\Middleware\\": "src/Http/Middleware/",
+      "Wbcodes\\SiteCore\\Support\\Modules\\": "src/Support/Modules/"
+    },
+    "files": [
+      "src/Helpers/Functions/general.php",
+      "src/Helpers/Functions/cache.php",
+      "src/Helpers/Functions/cpanel.php",
+      "src/Helpers/Functions/files.php",
+      "src/Helpers/Functions/migration.php",
+      "src/Helpers/Functions/permissions.php",
+      "src/Helpers/Functions/site_helper.php",
+      "src/Helpers/Functions/translation.php",
+      "src/Helpers/Functions/wbcodes-blog.php"
+    ],
+    "classmap": [
+      "src/database/",
+      "src/database/seeders/",
+      "src/database/factories/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Wbcodes\\SiteCore\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "SiteCoreServiceProvider"
+      ]
+    }
+  }
+}

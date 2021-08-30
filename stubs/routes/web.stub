@@ -1,0 +1,54 @@
+
+Route::group([
+    'middleware' => array_merge(['wbcodes_verified_device']),
+], function () {
+    $models = config("site_core.modules");
+    $models = collect($models)->where('is_base_controller', 1);
+
+    foreach ($models as $model) {
+        if (!$model["is_active"]) {
+            continue;
+        }
+        $name = $model["name"];
+        $except = $model["except"];
+        $namespace_controller = $model["controller_path"];
+
+        Route::group(["prefix" => $name], function () use ($namespace_controller) {
+            Route::post("export/{type}", [$namespace_controller, "saveExportFile"])->where("type", "excel|csv|pdf");
+            Route::post("{id}/export/{type}", [$namespace_controller, "exportSingleFile"])->where("type", "excel|csv|pdf");
+
+            Route::get("{id}/clone", [$namespace_controller, "clone"]);
+            Route::post("{id}/restore", [$namespace_controller, "restore"]);
+            Route::post("{id}/force-delete", [$namespace_controller, "forceDelete"]);
+
+            Route::get("custom-views/{slug}", [BaseController::class, "customViewIndex"]);
+            Route::post("custom-views/{slug}/tables", [BaseController::class, "customViewTable"]);
+
+            Route::post("tables", [$namespace_controller, "createTable"]);
+
+            // kanban functions
+            Route::group(["prefix" => "kanban"], function () use ($namespace_controller) {
+                Route::get("board", [$namespace_controller, "kanbanBoard"]);
+                Route::get("drag-card", [$namespace_controller, "kanbanDragCard"]);
+                Route::get("sort-list", [$namespace_controller, "kanbanSortList"]);
+            });
+        });
+
+        Route::get("list/{$name}", [$namespace_controller, "list"]);
+        Route::get("trash/{$name}", [$namespace_controller, "trash"]);
+        Route::post("{trash}/{$name}/tables", [$namespace_controller, "createTable"]);
+
+        Route::resource($name, $namespace_controller)->except($except);
+    }
+
+    // Activities
+    Route::post("/activities/{id}/close", [ActivityController::class, "closeTask"]);
+
+    // Leads
+    Route::group(["prefix" => "leads"], function () {
+        Route::get("{id}/convert", [LeadController::class, "convert"])->name("leads.convert");
+        Route::get("{id}/converted", [LeadController::class, "converted"]);
+        Route::post("convert", [LeadController::class, "saveConvert"]);
+    });
+
+});

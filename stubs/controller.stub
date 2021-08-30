@@ -1,0 +1,122 @@
+<?php
+
+namespace {{ namespace }};
+
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
+use Wbcodes\SiteCore\Http\Controllers\Web\BaseController;
+
+class {{ class }} extends BaseController
+{
+    /**
+     * {{ class }} constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->module = _site_core_('{{class}}', 'controller');
+
+        $this->permissionName = get_site_core_core_module($this->module, 'can');
+
+        $this->moduleClass = get_site_core_core_module($this->module, 'model');
+
+        $this->folderName = get_site_core_core_module($this->module, 'folder_name');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  Request  $request
+     *
+     * @param  bool  $trash
+     *
+     * @return Application|Factory|Response|View
+     */
+    public function index(Request $request, $trash = false)
+    {
+        return parent::index($request, $trash);
+    }
+
+    /**
+     * @param  Request  $request
+     * @param  bool  $trash
+     *
+     * @throws Exception
+     * @return Application|Factory|View
+     */
+    public function createTable(Request $request, $trash = false)
+    {
+        return parent::createTable($request, $trash);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Application|Factory|Response|View
+     */
+    public function create()
+    {
+        return parent::create();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Request  $request
+     *
+     * @return Application|RedirectResponse|Response|Redirector
+     */
+    public function store(Request $request)
+    {
+        return parent::store($request);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  Request  $request
+     * @param         $id
+     *
+     * @return Application|Factory|JsonResponse|View
+     */
+    public function show(Request $request, $id)
+    {
+        return parent::show($request, $id);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param $id
+     *
+     * @return Application|Factory|Response|View
+     */
+    public function edit($id)
+    {
+        return parent::edit($id);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param         $id
+     *
+     * @throws ValidationException
+     * @return Application|RedirectResponse|Response|Redirector
+     */
+    public function update(Request $request, $id)
+    {
+        return parent::update($request, $id);
+    }
+
+}

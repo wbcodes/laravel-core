@@ -1,0 +1,108 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Notifications\NotificationHelper;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+
+class {{ class }} extends Notification implements ShouldQueue
+{
+    use Queueable, NotificationHelper;
+
+    /**
+     * Create a new notification instance.
+     *
+     * @param $module
+     */
+    public function __construct($module)
+    {
+        $this->module = $module;
+
+        $this->panel = null;
+
+        $this->table = [];
+
+        $this->data = [
+            'data'  => $this->module,
+            'link'  => optional($this->module)->url,
+            'icon'  => get_site_core_core_module('DummyTable', 'icon'),
+            'title' => "New DummyTitle #".optional($this->module)->id,
+        ];
+    }
+
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @param  mixed  $notifiable
+     *
+     * @return array
+     */
+    public function via($notifiable)
+    {
+        return ['mail', 'database'];
+    }
+
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param mixed $notifiable
+     *
+     * @return MailMessage
+     */
+    public function toMail($notifiable)
+    {
+        $mail = (new MailMessage)
+            ->from(config('mail.from.address'))
+            ->subject('New DummyTitle')
+            ->line('New DummyTitle has been created.')
+            ->action('View DummyTitle', optional($this->module)->url)
+            ->line('Thank you for using our application!')
+            ->markdown('vendor.notifications.email', [
+                'table' => $this->table,
+                'panel' => $this->panel
+            ]);
+
+        return $this->mail_with_cc($mail);
+    }
+
+    /**
+     * @param $notifiable
+     *
+     * @return array
+     */
+    public function toDatabase($notifiable)
+    {
+        $this->forget_cache($notifiable->id);
+
+        $this->data['user'] = $notifiable;
+
+        return $this->data;
+    }
+
+    /**
+     * @param $notifiable
+     *
+     * @return array
+     */
+    public function toBroadcast($notifiable)
+    {
+        $this->data['user'] = $notifiable;
+
+        return $this->data;
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     *
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return $this->data;
+    }
+}

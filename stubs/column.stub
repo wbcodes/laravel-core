@@ -1,0 +1,37 @@
+<?php
+
+namespace {{namespace}};
+
+use Wbcodes\SiteCore\Support\BaseCols;
+
+class {{class}} extends BaseCols
+{
+    const DESCRIPTION_SECTION = 'description_information';
+
+    public $table = 'DummyTable';
+    public $model = 'DummyModel';
+    public $permissionName = 'DummyPermission';
+
+    public function __construct()
+    {
+        parent::__construct($this->table, $this->model, $this->permissionName);
+
+        $this->addColumn('id')
+            ->setFieldsSectionCol(self::COL1)
+            ->setTitle('ID')
+            ->get();
+
+        $this->addColumn('title')
+            ->setShowInIndexType('url')
+            ->setValidation(true)
+            ->get();
+
+        $this->addFilterColumn('activities')->setFieldType('filter_counter')->get();
+        $this->addFilterColumn('notes')->setFieldType('filter_counter')->get();
+
+        $this->getFilterRelationsCountColumns();
+
+        $this->crudTouchedRecordColumns();
+
+    }
+}

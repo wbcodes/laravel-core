@@ -1,0 +1,43 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Listeners\BaseListener;
+
+class {{ class }} implements ShouldQueue
+{
+    use BaseListener;
+
+    /**
+     * Create the event listener.
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     * @param object $event
+     * @return void
+     */
+    public function handle($event)
+    {
+        // This rule will be executed when a lead is created.
+        $module = $event->module;
+        $original = $event->original;
+
+    }
+
+    /**
+     * @param {{ class }}  $event
+     * @param $exception
+     */
+    public function failed({{ class }} $event, $exception)
+    {
+      // Log::error($exception);
+      $this->saveEventLog(self::class, $event->module, class_basename($event), $exception);
+    }
+}

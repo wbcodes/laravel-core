@@ -1,0 +1,234 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Events\{{ class }}\{{ class }}Created;
+use App\Events\{{ class }}\{{ class }}Updated;
+use App\Support\{{ class }}Cols;
+use App\Traits\CustomHelper;
+use Wbcodes\SiteCore\Scopes\AvailableToShow;
+use Wbcodes\SiteCore\Traits\Activitable;
+use Wbcodes\SiteCore\Traits\Attachable;
+use Wbcodes\SiteCore\Traits\Filter;
+use Wbcodes\SiteCore\Traits\Helper;
+use Wbcodes\SiteCore\Traits\Noteable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Auditable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
+
+class {{ class }} extends Model implements \OwenIt\Auditing\Contracts\Auditable, Searchable
+{
+    use SoftDeletes, Auditable, Helper, Filter, Noteable, Attachable, Activitable, HasFactory, CustomHelper;
+
+    const PERMISSION_ACTION = [
+        'View'        => 'View',
+        'Create'      => 'Create',
+        'Edit'        => 'Edit',
+        'Delete'      => 'Delete',
+        'Export'      => 'Export',
+        'MassUpdate'  => 'Mass Update',
+        'MassDelete'  => 'Mass Delete',
+        'ChangeOwner' => 'Change Owner',
+        'PrintView'   => 'Print View',
+    ];
+
+    public static $cacheKeys = [];
+
+    public static $hasLastActivityColumn = true;
+
+    public static $mainTitle = 'title';
+
+    public static $textLimit = 40;
+
+    public static $columns = {{ class }}Cols::class;
+
+//    public static $serialPrefix = 'XX';
+
+    public static $hasModalInShow = false;
+
+//    public static $kanbanCard = {{ class }}Resource::class;
+
+    public static $relatedList = [
+        'notes'               => 'notes',
+        'attachments'         => 'attachments',
+        'open_activities'     => 'open_activities',
+        'closed_activities'   => 'closed_activities',
+    ];
+
+    public static $related_modules = [
+        'Notes',
+        'Attachments',
+        'Activities',
+        'Complaints',
+    ];
+
+    public static $deepModules = [
+//        'notes'       => \App\Models\Note::class,
+//        'attachments' => \App\Models\Attachment::class,
+//        'activities'  => \App\Models\Activity::class,
+    ];
+
+    public static $searchable_cols = [
+        'title',
+//        'mobile',
+    ];
+
+    public static $with_relations = [
+//        '',
+    ];
+
+    public $url_prefix = 'DummyURL';
+
+    protected $dispatchesEvents = [
+        'created' => {{class}}Created::class,
+        'updated' => {{class}}Updated::class,
+    ];
+
+    /**
+    * @return mixed
+    */
+    public static function getTableName()
+    {
+        return with(new static)->getTable();
+    }
+
+    /**
+     * @return UrlGenerator|string
+     */
+    public function getUrlAttribute()
+    {
+        return url("{$this->url_prefix}/{$this->id}");
+    }
+
+    /**
+     * @param  bool  $withTable
+     *
+     * @return BelongsTo
+     */
+//    public function relationName($withTable = false)
+//    {
+//        return $this->belongsToRelation(RelationClass::class, 'column_name_id', $withTable);
+//    }
+
+    /**
+     * @return HasMany
+     */
+//    public function relationName()
+//    {
+//        return $this->hasMany(RelationClass::class);
+//    }
+
+    /**
+     * deepNotes function gets {{class}}->notes and related sub-model notes
+     *
+     * @param  false  $trash
+     * @param  null  $deepModules
+     *
+     * @return mixed
+     */
+    public function deepNotes($trash = false, $deepModules = null)
+    {
+        return get_deep_modules_data($this, 'notes', $deepModules ?? self::$deepModules, $trash);
+    }
+
+     /**
+     * deepAttachments function gets {{class}}->attachments and related sub-model attachment
+     *
+     * @param  false  $trash
+     * @param  null  $deepModules
+     *
+     * @return mixed
+     */
+    public function deepAttachments($trash = false, $deepModules = null)
+    {
+        return get_deep_modules_data($this, 'attachments', $deepModules ?? self::$deepModules, $trash);
+    }
+
+    /**
+     * deepActivities function gets {{class}}->activities and related sub-model activities
+     *
+     * @param  string  $status
+     * @param  false  $trash
+     * @param  null  $deepModules
+     */
+    public function deepActivities($status = 'open', $trash = false, $deepModules = null)
+    {
+        return get_deep_activities($this, $status, self::$deepModules, $trash);
+    }
+
+    /**
+     * @return string
+     */
+//    public function getSerialNumberAttribute()
+//    {
+//        return optional($this->deal)->serialNumber.self::$serialPrefix.$this->id;
+//    }
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        $url = $this->url;
+
+        return new SearchResult(
+            $this,
+            $this->modelTitle,
+            $url
+        );
+    }
+
+    /**
+     * boot
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::updated(function ($model) {
+            self::lastActivityGMTDate($model);
+        });
+
+        static::deleting(function ($model) {
+           if ($model->isForceDeleting()) {
+                self::forceDeleteModelRow($model);
+            } else {
+                self::deleteModelRow($model);
+            }
+        });
+
+        static::restoring(function ($model) {
+            self::restoreModelRow($model);
+        });
+
+        static::saved(function ($model) {
+           self::clearCaches($model);
+        });
+    }
+
+    /**
+     * @param  null  $model
+     *
+     * @return void
+     */
+    protected static function clearCaches($model = null)
+    {
+        foreach (self::$cacheKeys as $key) {
+            Cache::forget($key);
+        }
+    }
+
+    /**
+     * The "booted" method of the model.
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new AvailableToShow);
+    }
+}
