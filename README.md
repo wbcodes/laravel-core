@@ -195,10 +195,6 @@ This package provides some artisan commands in order to manage its resources. Th
 
 **>** `php artisan sitecore:module:create`
 
-**>** `php artisan sitecore:leads:move-to-leader`
-
-**>** `php artisan sitecore:leads:redist`
-
 **>** `php artisan sitecore:remove:reports-drafts`
 
 **>** `php artisan sitecore:update:permissions`
@@ -213,14 +209,6 @@ This package provides some artisan commands in order to manage its resources. Th
 
 > `php artisan sitecore:module:create`
 > command will add new row to module table.
-
-> `php artisan sitecore:leads:move-to-leader`
-> command will be executed 5 Day(s) After Created Time. Recur Once.
-
-
-> `php artisan sitecore:leads:redist`
-> command will be Redistribution Lead.
-
 
 > `php artisan sitecore:remove:reports-drafts`
 > command will be remove all draft reports which not saved.
