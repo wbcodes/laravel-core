@@ -43,5 +43,6 @@
         "Wbcodes\\SiteCore\\Providers\\SiteCoreServiceProvider"
       ]
     }
-  }
+  },
+  "minimum-stability": "stable"
 }
