@@ -164,7 +164,7 @@ class SiteCoreServiceProvider extends BaseProvider
      */
     protected function registerConfig()
     {
-        $this->mergeConfigFrom($this->packagePath('src/config/site.php'), 'site');
+        $this->mergeConfigFrom($this->packagePath('src/config/site_core.php'), 'site_core');
     }
 
     /**
