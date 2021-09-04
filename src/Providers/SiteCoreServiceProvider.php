@@ -2,7 +2,6 @@
 
 namespace Wbcodes\SiteCore\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Wbcodes\SiteCore\Console\Commands\ClearCommand;
@@ -98,23 +97,9 @@ class SiteCoreServiceProvider extends BaseProvider
      */
     protected function registerRoutes()
     {
-        Route::group($this->routeConfiguration(), function () {
-            $this->loadRoutesFrom($this->packageSrcPath('routes/api.php'));
-            $this->loadRoutesFrom($this->packageSrcPath('routes/ajax.php'));
-            $this->loadRoutesFrom($this->packageSrcPath('routes/web.php'));
-        });
+//        $this->loadRoutesFrom($this->packageSrcPath('routes/web.php'));
     }
 
-    /**
-     * @return array
-     */
-    protected function routeConfiguration()
-    {
-        return [
-            'prefix'     => config('site.routes.prefix'),
-            'middleware' => config('site.routes.middleware', ['web', 'auth']),
-        ];
-    }
 
     /**
      * Publish Files form package.
@@ -123,9 +108,6 @@ class SiteCoreServiceProvider extends BaseProvider
     protected function publishFiles()
     {
         $publishes = [
-            'assets'  => [
-                $this->packagePath('../publishable/assets') => public_path('themes/frest/assets'),
-            ],
             'lang'    => [
                 $this->packageSrcPath('resources/lang') => resource_path('lang/vendor/site'),
             ],
@@ -134,7 +116,7 @@ class SiteCoreServiceProvider extends BaseProvider
             ],
 
             'config' => [
-                $this->packagePath('../publishable/config/site.php') => config_path('site.php'),
+                $this->packageSrcPath('Config/site_core.php') => config_path('site_core.php'),
             ],
 
             'views' => [
