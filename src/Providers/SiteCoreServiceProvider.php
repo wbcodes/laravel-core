@@ -136,9 +136,9 @@ class SiteCoreServiceProvider extends BaseProvider
         }
 
         // Publish database folder files
-        $migrationFiles = $this->getMigrationFilesArray();
-        $seederFiles = $this->getDirectoryFilesArray('seeders');
-        $factoryFiles = $this->getDirectoryFilesArray('factories');
+//        $migrationFiles = $this->getMigrationFilesArray();
+//        $seederFiles = $this->getDirectoryFilesArray('seeders');
+//        $factoryFiles = $this->getDirectoryFilesArray('factories');
 
         // Publish support columns classes
         $SupportColumns = $this->getStubFilesArray('stubs', 'columns', app_path('Support'));
