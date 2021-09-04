@@ -39,7 +39,9 @@
   },
   "extra": {
     "laravel": {
-      "providers": "src/Providers"
+      "providers": [
+        "Wbcodes\\SiteCore\\Providers\\SiteCoreServiceProvider"
+      ]
     }
   }
 }
