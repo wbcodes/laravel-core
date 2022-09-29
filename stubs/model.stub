@@ -2,7 +2,7 @@
 
 namespace {{ namespace }};
 
-class {{ class }} extends \Wbcodes\SiteCore\Models\{{ class }}
+class {{ class }} extends \Wbcodes\Core\Models\{{ class }}
 {
     /**
      * boot

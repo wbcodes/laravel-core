@@ -1,9 +1,9 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Remove;
+namespace Wbcodes\Core\Console\Commands\Remove;
 
 use Illuminate\Console\Command;
-use Wbcodes\SiteCore\Models\Report;
+use Wbcodes\Core\Models\Report;
 
 class RemoveDraftReportsCommand extends Command
 {
@@ -12,7 +12,7 @@ class RemoveDraftReportsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'sitecore:remove:reports-drafts';
+    protected $signature = 'wbcore:remove:reports-drafts';
 
     /**
      * The console command description.

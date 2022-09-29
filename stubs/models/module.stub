@@ -4,8 +4,8 @@ namespace {{ namespace }};
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Wbcodes\SiteCore\Models\Permission;
-use Wbcodes\SiteCore\Traits\Helper;
+use Wbcodes\Core\Models\Permission;
+use Wbcodes\Core\Traits\Helper;
 
 class {{ class }} extends Model
 {
@@ -15,32 +15,9 @@ class {{ class }} extends Model
         'table_name', 'name', 'title', 'icon_class', 'controller', 'model',
     ];
 
-    const BLOCK_FIELD_PERMISSION = [
-        'Property',
-        'Project',
-        'ProjectType',
-        'ProjectFlavor',
-        'User',
-        'ListOption',
-        'Filter',
-        'Country',
-        'City',
-        'Town',
-        'District',
-        'Role',
-        'Report',
-        'ReportFolder',
-    ];
+    protected static $blockFieldPermissionModules = [];
 
-    const READ_ONLY_MODULE = [
-        'Property',
-        'Project',
-        'User',
-        'Report',
-        'ListOption',
-        'Filter',
-        'Country'
-    ];
+    protected static $readOnlyModules = [];
 
     /**
      * @return HasMany
@@ -66,9 +43,13 @@ class {{ class }} extends Model
         return $this->hasMany(Permission::class)->where('permission_type', 'profile');
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeAvailableFieldPermission($query)
     {
-        return $query->whereNotIn('name', self::BLOCK_FIELD_PERMISSION);
+        return $query->whereNotIn('name', self::$blockFieldPermissionModules ?? []);
     }
 
     /**

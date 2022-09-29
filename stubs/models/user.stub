@@ -4,8 +4,8 @@ namespace {{ namespace }};
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Wbcodes\SiteCore\Traits\SiteUserTrait;
-use Wbcodes\SiteCore\Traits\HasCoreFactory;
+use Wbcodes\Core\Traits\SiteUserTrait;
+use Wbcodes\Core\Traits\HasCoreFactory;
 
 class {{ class }} extends Authenticatable
 {

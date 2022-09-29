@@ -1,13 +1,13 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands;
+namespace Wbcodes\Core\Console\Commands;
 
 use App\Models\Module;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class SiteCoreInstallCommand extends Command
+class InstallSiteCoreCommand extends Command
 {
     use CoreCommandTrait;
 
@@ -15,7 +15,7 @@ class SiteCoreInstallCommand extends Command
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'sitecore:install';
+    protected $signature = 'wbcore:install';
 
     /**
      * The console command description.
@@ -38,7 +38,7 @@ class SiteCoreInstallCommand extends Command
      */
     public function handle()
     {
-        $modules = config('site_core.modules', []);
+        $modules = config('wbcore.modules', []);
 
         $this->setRoutesInWebRouteFile();
 
@@ -71,7 +71,7 @@ class SiteCoreInstallCommand extends Command
     private function setRoutesInWebRouteFile()
     {
         $routeFileContent = file_get_contents(__DIR__.'/../../../stubs/routes/web.stub');
-        if (!Str::contains($routeFileContent, '$models = config("site_core.modules");')) {
+        if (!Str::contains($routeFileContent, '$models = config("wbcore.modules");')) {
             file_put_contents(base_path('routes/web.php'), $routeFileContent, FILE_APPEND);
         }
     }

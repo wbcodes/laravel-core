@@ -1,6 +1,8 @@
 <?php
 
-namespace Wbcodes\SiteCore\Helpers\Classes;
+namespace Wbcodes\Core\Helpers\Classes;
+
+use Illuminate\Support\Facades\Auth;
 
 class PermissionHelper
 {
@@ -25,16 +27,20 @@ class PermissionHelper
 
     /**
      * allows the user to make some things by set permission modules
-     * @param $modulePermissionName
-     * @return bool
+     * @param  null  $user
+     * @return array
      */
-    public static function my_permissions($modulePermissionName)
+    public static function userPermissions($user = null): array
     {
-        if (auth()->check() and auth()->user()->can($modulePermissionName)) {
-            return true;
+        $cacheKey = CacheKey::userPermissions($user);
+        if (Auth::check()) {
+            cache_get_data($cacheKey, function () use ($user) {
+                $user = $user ?? Auth::user();
+                return $user->getAllPermissions()->pluck('name')->toArray();
+            });
         }
 
-        return false;
+        return [];
     }
 
     /**
@@ -51,7 +57,7 @@ class PermissionHelper
             $modulePermissionName = self::setModulePermissionName($moduleName, $permission_name);
         }
 
-        if (in_array(self::my_permissions($modulePermissionName))) {
+        if (in_array($modulePermissionName, self::userPermissions())) {
             return true;
         }
 
@@ -222,10 +228,8 @@ class PermissionHelper
     /**
      * @param  mixed  $permissionName
      */
-    public function setPermissionName($permissionName): void
+    public function setPermissionName($permissionName)
     {
         $this->permissionName = $permissionName;
     }
-
-
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Update;
+namespace Wbcodes\Core\Console\Commands\Update;
 
 use App\Models\Module;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
-use Wbcodes\SiteCore\Models\CustomView;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Models\CustomView;
 
 class UpdateDefaultCustomViewsCommand extends Command
 {
@@ -17,7 +17,7 @@ class UpdateDefaultCustomViewsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'sitecore:custom-views:update';
+    protected $signature = 'wbcore:custom-views:update';
 
     /**
      * The console command description.

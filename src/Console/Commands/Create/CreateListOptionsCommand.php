@@ -1,11 +1,11 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands;
+namespace Wbcodes\Core\Console\Commands\Create;
 
 use Illuminate\Console\Command;
 
 use Illuminate\Support\Str;
-use Wbcodes\SiteCore\Models\ListOption;
+use Wbcodes\Core\Models\ListOption;
 
 class CreateListOptionsCommand extends Command
 {
@@ -13,7 +13,7 @@ class CreateListOptionsCommand extends Command
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'sitecore:listOption:create';
+    protected $signature = 'wbcore:listOption:create';
 
     /**
      * The console command description.

@@ -1,10 +1,10 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Make;
+namespace Wbcodes\Core\Console\Commands\Make;
 
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputArgument;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
 
 class MakeBaseController extends GeneratorCommand
 {
@@ -15,7 +15,7 @@ class MakeBaseController extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'sitecore:make:controller {name}';
+    protected $signature = 'wbcore:make:controller {name}';
 
     /**
      * The console command description.

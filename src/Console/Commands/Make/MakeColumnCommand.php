@@ -1,12 +1,12 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Make;
+namespace Wbcodes\Core\Console\Commands\Make;
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
 
 class MakeColumnCommand extends GeneratorCommand
 {
@@ -16,7 +16,7 @@ class MakeColumnCommand extends GeneratorCommand
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'sitecore:make:column {name}';
+    protected $signature = 'wbcore:make:column {name}';
 
     /**
      * The console command description.

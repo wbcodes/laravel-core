@@ -5,14 +5,43 @@
  */
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
+
 /*-----------------------------------------------------------------------------------*/
 
 if (!function_exists('cache_get_key')) {
     function cache_get_key($module, $slug, $locale = null)
     {
         $locale = $locale ?? app()->getLocale();
+        $module = class_basename(Str::singular($module));
+        $slug = Str::slug($slug);
 
         return "{$locale}:{$module}:{$slug}"; // en:page:slug
+    }
+}
+/*--------------------------------------{</>}----------------------------------------*/
+
+if (!function_exists('cache_get_data')) {
+    /**
+     * @param $key
+     * @param $query
+     * @param  null  $ttl
+     * @return mixed
+     */
+    function cache_get_data($key, $query, $ttl = null)
+    {
+        if (!Cache::has($key)) {
+            if ($ttl) {
+                // set cache for ttl time
+                Cache::remember($key, $ttl, $query);
+            } else {
+                // set cache forever
+                Cache::rememberForever($key, $query);
+            }
+        }
+
+        // get page from cache
+        return Cache::get($key);
     }
 }
 /*--------------------------------------{</>}----------------------------------------*/
@@ -26,108 +55,65 @@ if (!function_exists('cache_forget')) {
 }
 /*----------------------------------------------------------------------------------*/
 
-if (!function_exists('cache_refresh_forever')) {
-    function cache_refresh_forever($key, $query)
-    {
-        // delete this query from cache
-        Cache::forget($key);
-
-        // caching again
-        Cache::rememberForever($key, function () use ($query) {
-            return $query;
-        });
-
-        return true;
-    }
-}
-/*----------------------------------------------------------------------------------*/
-
 if (!function_exists('cache_refresh')) {
-    function cache_refresh($key, $time, $query)
-    {
-        // delete this query from cache
-        Cache::forget($key);
-
-        // caching again
-        Cache::remember($key, $time, function () use ($query) {
-            return $query;
-        });
-
-        return true;
-    }
-}
-/*----------------------------------------------------------------------------------*/
-
-if (!function_exists('cache_get')) {
     /**
      * @param $key
+     * @param $query
+     * @param  null  $ttl
      * @return mixed
      */
-    function cache_get($key)
+    function cache_refresh($key, $query, $ttl = null)
     {
-        return Cache::get($key);
+        // delete this query from cache
+        Cache::forget($key);
+
+        // caching again
+        return cache_get_data($key, $query, $ttl);
     }
 }
 /*----------------------------------------------------------------------------------*/
 
-if (!function_exists('cache_get_by_slug')) {
+if (!function_exists('cache_get_data_by_slug')) {
     /**
-     * @param        $slug
      * @param  null  $module
+     * @param        $slug
      * @param  null  $with
+     * @param  null  $ttl
      * @return mixed
      */
-    function cache_get_by_slug($module, $slug, $with = null)
+    function cache_get_data_by_slug($module, $slug, $with = null, $ttl = null)
     {
-        $key = cache_get_key($slug, $module);
+        $key = cache_get_key($module, $slug);
+
         // caching project if not existing
-        if (!Cache::has($key)) {
-            Cache::rememberForever($key, function () use ($module, $slug, $with) {
-                $modelClass = get_cpanel_module($module, 'model');
-                if ($with) {
-                    return $modelClass::with($with)->active()->where('slug', $slug)->firstOrFail();
-                }
+        return cache_get_data($key, function () use ($module, $slug, $with) {
 
-                return $modelClass::active()->where('slug', $slug)->firstOrFail();
-            });
-        }
+            $modelClass = get_cpanel_module($module, 'model');
 
-        // get item from cache by cache key
-        return Cache::get($key);
+            $rows = $modelClass::active()->where('slug', $slug);
+
+            if ($with) {
+                $rows = $rows->with($with);
+            }
+
+            return $rows->firstOrFail();
+        }, $ttl);
     }
 }
 /*--------------------------------------{</>}----------------------------------------*/
 
 if (!function_exists('cache_get_from_sitemap')) {
-    function cache_get_from_sitemap($module, $slug, $locale = null)
+    function cache_get_from_sitemap($slug, $locale = null)
     {
-        $locale = $locale ?? app()->getLocale();
-        $slug = "{$locale}:$slug";
-        $key = cache_get_key($slug, 'App\\Sitemap'); // sitemap:tr:news
+        $module = "App\\Models\\Sitemap";
+        $key = cache_get_key($module, $slug, $locale); // sitemap:tr:news
+
         // caching project if not existing
-        if (!Cache::has($key)) {
-            Cache::remember($key, Carbon\Carbon::now()->addHour(), function ($module) {
-                $moduleClass = get_cpanel_module($module, 'model');
+        return cache_get_data($key, function () use ($module) {
+            $moduleClass = get_cpanel_module($module, 'model');
 
-                return $moduleClass::ofLang()->active()->orderBy('published_at', 'desc')->get();
-            });
-        }
-
-        // get page from cache
-        return Cache::get($key);
-    }
-}
-/*--------------------------------------{</>}----------------------------------------*/
-
-if (!function_exists('cache_data_get')) {
-    function cache_data_get($key, $time, $query)
-    {
-        if (!Cache::has($key)) {
-            Cache::remember($key, $time, $query);
-        }
-
-        // get page from cache
-        return Cache::get($key);
+            return $moduleClass::ofLang()->active()->orderBy('published_at', 'desc')->get();
+        }, Carbon\Carbon::now()->addHour());
     }
 }
 /*--------------------------------------{</>}----------------------------------------*/

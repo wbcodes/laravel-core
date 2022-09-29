@@ -1,11 +1,11 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Clear;
+namespace Wbcodes\Core\Console\Commands\Clear;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
 
 class ClearNotificationsTableCommand extends Command
 {
@@ -16,7 +16,7 @@ class ClearNotificationsTableCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'sitecore:clear:notifications';
+    protected $signature = 'wbcore:clear:notifications';
 
     /**
      * The console command description.
@@ -46,7 +46,7 @@ class ClearNotificationsTableCommand extends Command
         $this->commandStartInfo("Clear {$command_title}.");
 
         try {
-            $clear_notifications_time = config('site_core.clear_time.notifications', 'monthly');
+            $clear_notifications_time = config('wbcore.clear_time.notifications', 'monthly');
             $clear_time = $this->getClearTimeFromConfig($clear_notifications_time);
 
             DB::table('notifications')->whereDate('created_at', '<', $clear_time)->delete();

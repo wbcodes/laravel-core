@@ -1,11 +1,11 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Update;
+namespace Wbcodes\Core\Console\Commands\Update;
 
 use App\Models\Module;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
 
 class UpdateModulesCommand extends Command
 {
@@ -15,13 +15,13 @@ class UpdateModulesCommand extends Command
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'sitecore:modules:update';
+    protected $signature = 'wbcore:modules:update';
 
     /**
      * The console command description.
      * @var string
      */
-    protected $description = 'This command will create a new module if not exists from config/site_core.php';
+    protected $description = 'This command will create a new module if not exists from config/wbcore.php';
 
     /**
      * Create a new command instance.
@@ -40,7 +40,7 @@ class UpdateModulesCommand extends Command
     {
         $this->commandStartInfo("Updated Modules.");
 
-        $modules = config('site_core.modules', []);
+        $modules = config('wbcore.modules', []);
         $no_new_module = true;
         foreach ($modules as $name => $module_array) {
             if ($this->firstOrCreateModule($name)) {

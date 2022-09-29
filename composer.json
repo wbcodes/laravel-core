@@ -1,5 +1,5 @@
 {
-  "name": "wbcodes/site-core",
+  "name": "wbcodes/laravel-core",
   "description": "This websites site core console commands package",
   "license": "MIT",
   "authors": [
@@ -11,8 +11,6 @@
   "require": {
     "php": ">=7.0",
     "illuminate/support": "^7.3|^8.0",
-    "laravel/scout": "^8.6.0",
-    "predis/predis": "^1.1.7",
     "spatie/laravel-permission": "^4.4.0",
     "yajra/laravel-datatables-oracle": "^9.18.1"
   },
@@ -21,28 +19,27 @@
   },
   "autoload": {
     "psr-4": {
-      "Wbcodes\\SiteCore\\": "src/"
+      "Wbcodes\\SysCore\\": "src/"
     },
     "files": [
       "src/Helpers/Functions/general.php",
       "src/Helpers/Functions/cache.php",
-      "src/Helpers/Functions/files.php",
-      "src/Helpers/Functions/site_helper.php"
+      "src/Helpers/Functions/files.php"
     ],
     "classmap": [
     ]
   },
   "autoload-dev": {
     "psr-4": {
-      "Wbcodes\\SiteCore\\Tests\\": "tests/"
+      "Wbcodes\\SysCore\\Tests\\": "tests/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "Wbcodes\\SiteCore\\Providers\\SiteCoreServiceProvider"
+        "CoreServiceProvider"
       ]
     }
   },
-  "minimum-stability": "stable"
+  "minimum-stability": "dev"
 }

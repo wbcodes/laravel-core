@@ -1,13 +1,13 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Make;
+namespace Wbcodes\Core\Console\Commands\Make;
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
 
 class MakeNotificationCommand extends GeneratorCommand
 {
@@ -17,7 +17,7 @@ class MakeNotificationCommand extends GeneratorCommand
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'sitecore:make:notification
+    protected $signature = 'wbcore:make:notification
                             {name : notification class name}
                             {--t|--type=Create : Type of notification Create or Update}';
 

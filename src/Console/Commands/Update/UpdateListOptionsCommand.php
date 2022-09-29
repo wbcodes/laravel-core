@@ -1,9 +1,9 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Update;
+namespace Wbcodes\Core\Console\Commands\Update;
 
 use Illuminate\Console\Command;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
 
 class UpdateListOptionsCommand extends Command
 {
@@ -12,7 +12,7 @@ class UpdateListOptionsCommand extends Command
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'sitecore:listOptions:update';
+    protected $signature = 'wbcore:listOptions:update';
 
     /**
      * The console command description.

@@ -49,10 +49,10 @@ if (!function_exists('not_authorize')) {
     function not_authorize($is_json = true)
     {
         if ($is_json) {
-            return response()->json(__sitecore_trans('errors.messages.unauthorized'), 401);
+            return response()->json(__('wbcore::locale.errors.messages.unauthorized'), 401);
         }
 
-        return view('sitecore::errors.401');
+        return view('wbcore::errors.401');
     }
 }
 /*---------------------------------------{</>}---------------------------------------*/

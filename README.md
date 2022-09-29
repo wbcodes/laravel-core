@@ -1,11 +1,11 @@
 # Wbcod Core Laravel Package
 
-This is the repo for the [Wbcodes Core](https://github.com/wbcodes/site-core) project. A Wbcodes Site package to use CRM in your laravel project simply.
+This is the repo for the [Wbcodes Core](https://github.com/wbcodes/laravel-core) project. A Wbcodes Site package to use CRM in your laravel project simply.
 
 ## Documentation
 
-All documentation is available on the [Wiki Pages](https://github.com/wbcodes/site-core/src/master). We encourage you to read it. If you are new start with the [Installation Guide](https://github.com/wbcodes/site-core/src/master). To update
-the package consult the [Updating Guide](https://github.com/wbcodes/site-core/src/master).
+All documentation is available on the [Wiki Pages](https://github.com/wbcodes/laravel-core/src/master). We encourage you to read it. If you are new start with the [Installation Guide](https://github.com/wbcodes/laravel-core/src/master). To update
+the package consult the [Updating Guide](https://github.com/wbcodes/laravel-core/src/master).
 
 ## Requirements
 
@@ -18,12 +18,12 @@ The current package requirements are:
 
 To Install our package you can follow Steps in below.
 
-> **Note:** the next steps are valid for a fresh installation procedure, if you are updating the package, refers to the [Updating](https://github.com/wbcodes/site-core/src/master) section.
+> **Note:** the next steps are valid for a fresh installation procedure, if you are updating the package, refers to the [Updating](https://github.com/wbcodes/laravel-core/src/master) section.
 
 1. On the root folder of your Laravel project, require the package using composer:
 
    ```
-   composer require wbcodes/site-core
+   composer require wbcodes/laravel-core
    ```
 
 2. **(For Laravel 7+ only)** If you want to install the authentication scaffolding, then require the `laravel/ui` package using composer:
@@ -44,21 +44,21 @@ To Install our package you can follow Steps in below.
    ```
 
 
-5. publish vendor files from imtilak/site-core packege:
+5. publish vendor files from imtilak/laravel-core packege:
    ```
-   php artisan vendor:publish --provider="Wbcodes\SiteCore\Providers\SiteCoreServiceProvider"
+   php artisan vendor:publish --provider="Wbcodes\Core\Providers\SiteCoreServiceProvider"
    ```
 
    **or you can extract you need fiels using --tag={name}**
    ```
-   php artisan vendor:publish --provider="Wbcodes\SiteCore\Providers\SiteCoreServiceProvider" --tag=migrations
-   php artisan vendor:publish --provider="Wbcodes\SiteCore\Providers\SiteCoreServiceProvider" --tag=seeders
-   php artisan vendor:publish --provider="Wbcodes\SiteCore\Providers\SiteCoreServiceProvider" --tag=factories
-   php artisan vendor:publish --provider="Wbcodes\SiteCore\Providers\SiteCoreServiceProvider" --tag=public
-   php artisan vendor:publish --provider="Wbcodes\SiteCore\Providers\SiteCoreServiceProvider" --tag=lang
-   php artisan vendor:publish --provider="Wbcodes\SiteCore\Providers\SiteCoreServiceProvider" --tag=helpers
-   php artisan vendor:publish --provider="Wbcodes\SiteCore\Providers\SiteCoreServiceProvider" --tag=controllers
-   php artisan vendor:publish --provider="Wbcodes\SiteCore\Providers\SiteCoreServiceProvider" --tag=views
+   php artisan vendor:publish --provider="Wbcodes\Core\Providers\SiteCoreServiceProvider" --tag=migrations
+   php artisan vendor:publish --provider="Wbcodes\Core\Providers\SiteCoreServiceProvider" --tag=seeders
+   php artisan vendor:publish --provider="Wbcodes\Core\Providers\SiteCoreServiceProvider" --tag=factories
+   php artisan vendor:publish --provider="Wbcodes\Core\Providers\SiteCoreServiceProvider" --tag=public
+   php artisan vendor:publish --provider="Wbcodes\Core\Providers\SiteCoreServiceProvider" --tag=lang
+   php artisan vendor:publish --provider="Wbcodes\Core\Providers\SiteCoreServiceProvider" --tag=helpers
+   php artisan vendor:publish --provider="Wbcodes\Core\Providers\SiteCoreServiceProvider" --tag=controllers
+   php artisan vendor:publish --provider="Wbcodes\Core\Providers\SiteCoreServiceProvider" --tag=views
    ```
 
 6. Add this code to ./routes/web.php file
@@ -107,8 +107,8 @@ To Install our package you can follow Steps in below.
 #### Add This middleware to  Http/Kernel.php as $routeMiddleware
 
    ```shell
-   'wbcodes_settings'        => \Wbcodes\SiteCore\Middleware\SiteSettingsMiddleware::class,
-   'wbcodes_verified_device' => \Wbcodes\SiteCore\Middleware\VerifyDevice::class,
+   'wbcodes_settings'        => \Wbcodes\Core\Middleware\SiteSettingsMiddleware::class,
+   'wbcodes_verified_device' => \Wbcodes\Core\Middleware\VerifyDevice::class,
   ```
 
 #### use SiteUserTrait middleware to  Http/Kernel.php as $routeMiddleware
@@ -118,7 +118,7 @@ To Install our package you can follow Steps in below.
 
       namespace App\Models;
       
-      use Wbcodes\SiteCore\Traits\SiteUserTrait;
+      use Wbcodes\Core\Traits\SiteUserTrait;
       
       class User extends Authenticatable
       {
@@ -133,7 +133,7 @@ To Install our package you can follow Steps in below.
 1. First, update the package with the next composer command:
 
    ```
-   composer update wbcodes/site-core
+   composer update wbcodes/laravel-core
    ```
 
 2. Then, update the required Wbcodes Site assets resources
@@ -149,7 +149,7 @@ To Install our package you can follow Steps in below.
 3. If you have [published]() and modified the default `master.blade.php` file or any other view provided with this package, you may need to update them too. Please, note there could be huge updates on these views, so it is highly recommended to
    backup your files previosuly. To update the views, you may follow next steps:
 
-    - Make a copy (or backup) of the views you have modified, those inside the folder `resources/views/vendor/wbcodes/site-core`.
+    - Make a copy (or backup) of the views you have modified, those inside the folder `resources/views/vendor/wbcodes/laravel-core`.
 
     - Publish the new set of views, using the `--force` option to overwrite the existing files.
 
@@ -265,7 +265,7 @@ This package provides some artisan commands in order to manage its resources. Th
 
 [comment]: <> (This command is only a shortcut for `php artisan sitecore:install --force --only=assets`.)
 
-[comment]: <> (> **Note:** this command will only update the Wbcodes Site assets located on the `public/vendor` folder. It will not update any other package resources, refer to section [Updating]&#40;https://github.com/wbcodes/site-core/src/master&#41; to check how to make a complete update.)
+[comment]: <> (> **Note:** this command will only update the Wbcodes Site assets located on the `public/vendor` folder. It will not update any other package resources, refer to section [Updating]&#40;https://github.com/wbcodes/laravel-core/src/master&#41; to check how to make a complete update.)
 
 [comment]: <> (### The `sitecore:status` Command)
 

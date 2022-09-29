@@ -1,6 +1,6 @@
 
 Route::group([
-    'middleware' => array_merge(['wbcodes_verified_device']),
+
 ], function () {
     $models = config("site_core.modules");
     $models = collect($models)->where('is_base_controller', 1);

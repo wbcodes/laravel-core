@@ -1,12 +1,12 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Update;
+namespace Wbcodes\Core\Console\Commands\Update;
 
 use App\Models\Module;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
 
 class UpdateSiteCoreCommand extends Command
 {
@@ -16,7 +16,7 @@ class UpdateSiteCoreCommand extends Command
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'sitecore:update';
+    protected $signature = 'wbcore:update';
 
     /**
      * The console command description.
@@ -39,7 +39,7 @@ class UpdateSiteCoreCommand extends Command
      */
     public function handle()
     {
-        $modules = config('site_core.modules', []);
+        $modules = config('wbcore.modules', []);
 
         $this->generateControllers($modules);
 

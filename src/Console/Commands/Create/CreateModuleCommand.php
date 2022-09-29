@@ -1,6 +1,6 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands;
+namespace Wbcodes\Core\Console\Commands\Create;
 
 use Illuminate\Console\Command;
 use App\Models\Module;
@@ -12,7 +12,7 @@ class CreateModuleCommand extends Command
      *
      * @var string
      */
-    protected $signature = ':module:create {moduleName}';
+    protected $signature = 'wbcore:module:create {moduleName}';
 
     /**
      * The console command description.

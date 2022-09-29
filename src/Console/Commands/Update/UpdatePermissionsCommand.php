@@ -1,13 +1,13 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Update;
+namespace Wbcodes\Core\Console\Commands\Update;
 
 use App\Models\Module;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
-use Wbcodes\SiteCore\Models\Permission;
-use Wbcodes\SiteCore\Models\Role;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Models\Permission;
+use Wbcodes\Core\Models\Role;
 
 class UpdatePermissionsCommand extends Command
 {
@@ -17,7 +17,7 @@ class UpdatePermissionsCommand extends Command
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'sitecore:permissions:update';
+    protected $signature = 'wbcore:permissions:update';
 
     /**
      * The console command description.
@@ -42,7 +42,7 @@ class UpdatePermissionsCommand extends Command
      */
     public function handle()
     {
-        $this->call('sitecore:clear');
+        $this->call('wbcore:clear');
 
         $this->commandStartInfo("Update Permissions.");
 

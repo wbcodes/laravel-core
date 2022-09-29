@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Wbcodes\SiteCore\Providers;
+namespace Wbcodes\Core\Providers;
 
 
 use Illuminate\Support\Collection;

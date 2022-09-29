@@ -1,6 +1,6 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Import;
+namespace Wbcodes\Core\Console\Commands\Import;
 
 use Exception;
 use Illuminate\Console\Command;
@@ -13,7 +13,7 @@ class ImportElasticSearchModulesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'sitecore:import:elastic {--flush} {--delete}';
+    protected $signature = 'wbcore:import:elastic {--flush} {--delete}';
 
     /**
      * The console command description.
@@ -39,7 +39,7 @@ class ImportElasticSearchModulesCommand extends Command
      */
     public function handle()
     {
-        $searchable_modules = config('site_core.searchable.modules', []);
+        $searchable_modules = config('wbcore.searchable.modules', []);
 
         // Remove all module index files
         if ($this->option('delete')) {

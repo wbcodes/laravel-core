@@ -1,6 +1,6 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands;
+namespace Wbcodes\Core\Console\Commands;
 
 use Illuminate\Console\Command;
 
@@ -10,7 +10,7 @@ class RunSiteCoreProject extends Command
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'sitecore:run';
+    protected $signature = 'wbcore:run';
 
     /**
      * The console command description.
@@ -33,7 +33,7 @@ class RunSiteCoreProject extends Command
      */
     public function handle()
     {
-        $this->call('sitecore:clear');
+        $this->call('wbcore:clear');
         $this->call('serve', ['--port' => now()->year]);
 
         return 0;

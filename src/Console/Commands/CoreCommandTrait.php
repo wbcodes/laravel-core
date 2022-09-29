@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Wbcodes\SiteCore\Console\Commands;
+namespace Wbcodes\Core\Console\Commands;
 
 
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use OwenIt\Auditing\Models\Audit;
-use Wbcodes\SiteCore\Providers\SiteCoreServiceProvider;
+use Wbcodes\Core\Providers\CoreServiceProvider;
 
 trait CoreCommandTrait
 {
@@ -16,13 +16,12 @@ trait CoreCommandTrait
 
     /**
      * @param $path
-     * @param  bool  $production
      * @return string
      */
-    protected function packagePath($path, $production = true)
+    protected function packagePath($path)
     {
-        if ($production) {
-            return base_path("vendor/wbcodes/site-core/{$path}");
+        if (app()->isProduction()) {
+            return base_path("vendor/wbcodes/laravel-core/{$path}");
         };
         return __DIR__."/../../{$path}";
     }
@@ -239,7 +238,7 @@ trait CoreCommandTrait
         foreach (collect($modules)->where('is_base_controller', 1) as $moduleName => $module) {
             $controllerName = $module['controller'];
             if (!class_exists("App\\Http\\Controllers\\{$controllerName}")) {
-                $this->call('sitecore:make:controller', ['name' => $controllerName]);
+                $this->call('wbcore:make:controller', ['name' => $controllerName]);
             }
         }
         $this->warn('No More Controllers Needs To Publish');
@@ -258,10 +257,10 @@ trait CoreCommandTrait
             $className = "App\\Models\\{$modelName}";
             try {
                 if (!class_exists($className)) {
-                    $this->call('sitecore:make:model', ['name' => $modelName, '--base' => true]);
+                    $this->call('wbcore:make:model', ['name' => $modelName, '--base' => true]);
                 }
             } catch (Exception $exp) {
-                $this->call('sitecore:make:model', ['name' => $modelName, '--base' => true]);
+                $this->call('wbcore:make:model', ['name' => $modelName, '--base' => true]);
             }
         }
         $this->warn('No More Models Needs To Publish');
@@ -300,7 +299,7 @@ trait CoreCommandTrait
             $fileName = $file->getFilename();
             $filePath = $file->getPath()."/".$fileName;
             file_put_contents($filePath, str_replace(
-                "namespace Wbcodes\\SiteCore\\",
+                "namespace Wbcodes\\SysCore\\",
                 "namespace {$namespace}",
                 file_get_contents($filePath)
             ));
@@ -313,7 +312,7 @@ trait CoreCommandTrait
     private function publishVendor()
     {
         if (in_array(Str::lower($this->ask("Are you sure you want republish site core files ? (yes/no).", 'no')), $this->acceptAnswers)) {
-            $this->call('vendor:publish', ['--provider' => SiteCoreServiceProvider::class]);
+            $this->call('vendor:publish', ['--provider' => CoreServiceProvider::class]);
         }
     }
 
@@ -343,7 +342,7 @@ trait CoreCommandTrait
     {
         $year = now()->year;
         if (in_array(Str::lower($this->ask("Do you want run project on {$year} port on localhost? (yes/no).", 'yes')), $this->acceptAnswers)) {
-            $this->call('sitecore:run');
+            $this->call('wbcore:run');
         }
     }
 }

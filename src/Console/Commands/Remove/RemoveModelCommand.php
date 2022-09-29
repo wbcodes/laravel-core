@@ -1,6 +1,6 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Remove;
+namespace Wbcodes\Core\Console\Commands\Remove;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
@@ -14,7 +14,7 @@ class RemoveModelCommand extends Command
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'sitecore:remove:model 
+    protected $signature = 'wbcore:remove:model 
                         {name : model class name}
                         {--a|--all : Generate a migration, seeder, factory, and resource controller for the model. }
                         {--c|--controller : Create a new controller for the model. }

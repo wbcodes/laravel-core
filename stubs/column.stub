@@ -2,7 +2,7 @@
 
 namespace {{namespace}};
 
-use Wbcodes\SiteCore\Support\BaseCols;
+use Wbcodes\Core\Support\BaseCols;
 
 class {{class}} extends BaseCols
 {

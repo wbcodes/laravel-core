@@ -1,9 +1,9 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Clear;
+namespace Wbcodes\Core\Console\Commands\Clear;
 
 use Illuminate\Console\Command;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
 
 class ClearSiteCoreCommand extends Command
 {
@@ -13,7 +13,7 @@ class ClearSiteCoreCommand extends Command
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'sitecore:clear';
+    protected $signature = 'wbcore:clear';
 
     /**
      * The console command description.

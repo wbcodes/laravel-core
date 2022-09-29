@@ -1,6 +1,6 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Make;
+namespace Wbcodes\Core\Console\Commands\Make;
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
 
 class MakeModelCommand extends GeneratorCommand
 {
@@ -18,7 +18,7 @@ class MakeModelCommand extends GeneratorCommand
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'sitecore:make:model 
+    protected $signature = 'wbcore:make:model 
                         {name : model class name}
                         {--a|--all : Generate a migration, seeder, factory, and resource controller for the model. }
                         {--c|--controller : Create a new controller for the model. }
@@ -59,7 +59,7 @@ class MakeModelCommand extends GeneratorCommand
         if (parent::handle() === false && !$this->option('force')) {
             return false;
         }
-        $this->nameArgument = $this->nameArgument;
+        $this->nameArgument = $this->argument('name');
 
         if ($this->option('all')) {
             $this->input->setOption('factory', true);
@@ -166,7 +166,7 @@ class MakeModelCommand extends GeneratorCommand
 //        $modelName = $this->qualifyClass($this->getNameInput());
 
         if (!class_exists("App\\Http\\Controllers\\{$controller}Controller")) {
-            $this->call('sitecore:make:controller', array_filter([
+            $this->call('wbcore:make:controller', array_filter([
                 'name' => "{$controller}Controller",
 //                '--model' => $this->option('resource') || $this->option('api') ? $modelName : null,
 //                '--api'   => $this->option('api'),
@@ -182,7 +182,7 @@ class MakeModelCommand extends GeneratorCommand
         $column = $this->nameArgument;
 
         if (!class_exists("App\\Support\\{$column}Cols")) {
-            $this->call('sitecore:make:column', ['name' => "{$column}Cols"]);
+            $this->call('wbcore:make:column', ['name' => "{$column}Cols"]);
         }
     }
 
@@ -198,7 +198,7 @@ class MakeModelCommand extends GeneratorCommand
         ];
         foreach ($events as $event_name) {
             if (!class_exists("App\\Events\\{$event_name}")) {
-                $this->call('sitecore:make:event', ['name' => $event_name]);
+                $this->call('wbcore:make:event', ['name' => $event_name]);
             }
         }
     }
@@ -217,7 +217,7 @@ class MakeModelCommand extends GeneratorCommand
             $notification_name = "{$name}\\{$notification_type}{$name}Notification"; // Contact\\CreateContact
             // App\Notification\Contact\CreateContact
             if (!class_exists("App\\Notifications\\{$notification_name}")) {
-                $this->call('sitecore:make:notification', [
+                $this->call('wbcore:make:notification', [
                     'name'   => $notification_name,
                     '--type' => $notification_type,
                 ]);
@@ -237,7 +237,7 @@ class MakeModelCommand extends GeneratorCommand
         ];
         foreach ($events as $listener_name) {
             if (!class_exists("App\\Listeners\\{$listener_name}")) {
-                $this->call('sitecore:make:listener', ['name' => $listener_name]);
+                $this->call('wbcore:make:listener', ['name' => $listener_name]);
             }
         }
     }

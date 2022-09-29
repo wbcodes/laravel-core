@@ -12,7 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use Wbcodes\SiteCore\Http\Controllers\Web\BaseController;
+use Wbcodes\Core\Http\Controllers\Web\BaseController;
 
 class {{ class }} extends BaseController
 {

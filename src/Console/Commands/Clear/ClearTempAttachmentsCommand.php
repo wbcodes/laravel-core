@@ -1,11 +1,11 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Clear;
+namespace Wbcodes\Core\Console\Commands\Clear;
 
 use Illuminate\Console\Command;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
-use Wbcodes\SiteCore\Models\Attachment;
-use Wbcodes\SiteCore\Models\DropzoneTemp;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Models\Attachment;
+use Wbcodes\Core\Models\DropzoneTemp;
 
 class ClearTempAttachmentsCommand extends Command
 {
@@ -16,7 +16,7 @@ class ClearTempAttachmentsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'sitecore:clear:attachments';
+    protected $signature = 'wbcore:clear:attachments';
 
     /**
      * The console command description.
@@ -46,7 +46,7 @@ class ClearTempAttachmentsCommand extends Command
         $this->commandStartInfo("Clear {$command_title}.");
 
         try {
-            $clear_notifications_time = config('site_core.clear_time.attachments', 'monthly');
+            $clear_notifications_time = config('wbcore.clear_time.attachments', 'monthly');
             $clear_time = $this->getClearTimeFromConfig($clear_notifications_time);
 
             $attachments = Attachment::where('attachable_type', DropzoneTemp::class)

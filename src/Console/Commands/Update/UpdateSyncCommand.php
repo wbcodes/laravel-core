@@ -1,6 +1,6 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Update;
+namespace Wbcodes\Core\Console\Commands\Update;
 
 use Illuminate\Console\Command;
 
@@ -11,7 +11,7 @@ class UpdateSyncCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'sitecore:sync';
+    protected $signature = 'wbcore:sync';
 
     /**
      * The console command description.
@@ -37,9 +37,9 @@ class UpdateSyncCommand extends Command
      */
     public function handle()
     {
-        $this->call('sitecore:listOptions:update');
-        $this->call('sitecore:modules:update');
-        $this->call('sitecore:permissions:update');
+        $this->call('wbcore:listOptions:update');
+        $this->call('wbcore:modules:update');
+        $this->call('wbcore:permissions:update');
         return 0;
     }
 }

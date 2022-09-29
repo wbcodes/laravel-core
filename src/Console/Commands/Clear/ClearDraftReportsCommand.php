@@ -1,10 +1,10 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Clear;
+namespace Wbcodes\Core\Console\Commands\Clear;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Wbcodes\SiteCore\Console\Commands\CoreCommandTrait;
+use Wbcodes\Core\Console\Commands\CoreCommandTrait;
 
 class ClearDraftReportsCommand extends Command
 {
@@ -15,7 +15,7 @@ class ClearDraftReportsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'sitecore:clear:reports';
+    protected $signature = 'wbcore:clear:reports';
 
     /**
      * The console command description.
@@ -34,6 +34,7 @@ class ClearDraftReportsCommand extends Command
         parent::__construct();
     }
 
+
     /**
      * Execute the console command.
      *
@@ -46,7 +47,7 @@ class ClearDraftReportsCommand extends Command
 
         try {
 
-            $clear_notifications_time = config('site_core.clear_time.reports', 'monthly');
+            $clear_notifications_time = config('wbcore.clear_time.reports', 'monthly');
 
             $clear_time = $this->getClearTimeFromConfig($clear_notifications_time);
 

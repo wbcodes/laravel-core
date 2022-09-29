@@ -1,6 +1,6 @@
 <?php
 
-namespace Wbcodes\SiteCore\Console\Commands\Clear;
+namespace Wbcodes\Core\Console\Commands\Clear;
 
 use Exception;
 use Illuminate\Console\Command;
@@ -15,7 +15,7 @@ class ClearRedisCacheCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'sitecore:clear:redis {prefix?}';
+    protected $signature = 'wbcore:clear:redis {prefix?}';
 
     /**
      * The console command description.
