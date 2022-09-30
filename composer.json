@@ -9,7 +9,7 @@
     }
   ],
   "require": {
-    "php": ">=7.0",
+    "php": ">=7.4",
     "illuminate/support": "^7.3|^8.0",
     "spatie/laravel-permission": "^4.4.0",
     "yajra/laravel-datatables-oracle": "^9.18.1"
@@ -19,7 +19,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Wbcodes\\SysCore\\": "src/"
+      "Wbcodes\\Core\\": "src/"
     },
     "files": [
       "src/Helpers/Functions/general.php",
@@ -31,13 +31,13 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Wbcodes\\SysCore\\Tests\\": "tests/"
+      "Wbcodes\\Core\\Tests\\": "tests/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "CoreServiceProvider"
+        "Wbcodes\\Core\\Providers\\CoreServiceProvider"
       ]
     }
   },
