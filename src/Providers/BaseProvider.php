@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Wbcodes\Core\Providers;
-
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
@@ -13,7 +11,8 @@ class BaseProvider extends ServiceProvider
     protected $commands_array = [];
 
     /**
-     * @param $folderName
+     * @param $path
+     * @param  null  $folderName
      * @return array
      */
     protected function getDirectoryFilesArray($path, $folderName = null)
