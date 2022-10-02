@@ -29,14 +29,15 @@ if (!function_exists('asset_v')) {
     /**
      * get asset file path with version
      * @param $path
+     * @param  string  $prefix
      * @return string
      */
-    function asset_v($path)
+    function asset_v($path, $prefix = 'v')
     {
         $url = asset($path);
         $version = version(public_path($path));
 
-        return "{$url}?v={$version}";
+        return "{$url}?{$prefix}={$version}";
     }
 }
 /*---------------------------------------{</>}---------------------------------------*/

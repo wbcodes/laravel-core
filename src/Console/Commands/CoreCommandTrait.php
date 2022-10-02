@@ -3,7 +3,6 @@
 
 namespace Wbcodes\Core\Console\Commands;
 
-
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -299,7 +298,7 @@ trait CoreCommandTrait
             $fileName = $file->getFilename();
             $filePath = $file->getPath()."/".$fileName;
             file_put_contents($filePath, str_replace(
-                "namespace Wbcodes\\SysCore\\",
+                "namespace Wbcodes\\Core\\",
                 "namespace {$namespace}",
                 file_get_contents($filePath)
             ));

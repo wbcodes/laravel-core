@@ -34,6 +34,7 @@ class CoreServiceProvider extends BaseProvider
     public function __construct($app)
     {
         parent::__construct($app);
+
         $this->commands_array = [
             // CLEAR COMMANDS
             ClearDraftReportsCommand::class,

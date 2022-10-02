@@ -27,7 +27,7 @@ if (!function_exists('is_can_create')) {
      * @param $permissionName
      * @return bool
      */
-    function is_can_create($permissionName)
+    function is_can_create($permissionName = null)
     {
         return PermissionHelper::canCreate($permissionName);
     }
@@ -243,17 +243,27 @@ if (!function_exists('check_user_authorize')) {
      */
     function check_user_authorize($permissionName, $trash = null)
     {
-        if ($trash) {
-            if (!is_can_restore($permissionName) and !is_can_force_delete($permissionName)) {
-                return false;
-            }
+        if ($trash and !is_can_restore($permissionName) and !is_can_force_delete($permissionName)) {
+            return false;
         }
 
         if (!is_can_show($permissionName) and !is_can_show_all($permissionName)) {
             return false;
         }
-
         return true;
     }
 }
 /*---------------------------------------{</>}---------------------------------------*/
+if (!function_exists('available_permission_middleware')) {
+    /**
+     * @return array
+     */
+    function available_permission_middleware(): array
+    {
+        return [
+            'web',
+            'admin',
+            'api',
+        ];
+    }
+}
